@@ -2,7 +2,7 @@
 
 import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 
-export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
+export interface PanelProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   title?: ReactNode;
   subtitle?: ReactNode;
   badge?: ReactNode;

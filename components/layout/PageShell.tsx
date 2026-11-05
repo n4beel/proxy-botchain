@@ -130,17 +130,32 @@ export default function PageShell({
       >
         <div className="mx-auto w-full max-w-5xl px-4 md:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
-            {links.map((link) => (
+            {links.contract && (
               <a
-                key={link.href}
-                href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
+                href={links.contract}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hover:text-[var(--text-primary)] transition-colors underline underline-offset-4"
               >
-                {link.label}
+                Contract
               </a>
-            ))}
+            )}
+            <a
+              href={links.site}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--text-primary)] transition-colors underline underline-offset-4"
+            >
+              botchain.ai
+            </a>
+            <a
+              href={links.explorer}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--text-primary)] transition-colors underline underline-offset-4"
+            >
+              Explorer
+            </a>
           </div>
           <BuiltOnBotChain />
         </div>
