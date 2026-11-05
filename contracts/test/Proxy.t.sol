@@ -23,6 +23,35 @@ contract ProxyTest is Test {
     defaultOptions.push("Option Gamma");
   }
 
+  function test_OptionsOfBoundary() public {
+    vm.prank(alice);
+    uint256 id = proxy.create("Question?", defaultOptions, 1 days);
+    assertEq(proxy.optionsOf(id).length, 3);
+    vm.expectRevert(Proxy.PollNotFound.selector);
+    proxy.optionsOf(id + 1);
+  }
+
+  function test_LeaderAllOptionsChecked() public {
+    string[] memory sixOpts = new string[](6);
+    sixOpts[0] = "O0";
+    sixOpts[1] = "O1";
+    sixOpts[2] = "O2";
+    sixOpts[3] = "O3";
+    sixOpts[4] = "O4";
+    sixOpts[5] = "O5";
+
+    vm.prank(alice);
+    uint256 id = proxy.create("Question?", sixOpts, 1 days);
+
+    // Vote for the last option (index 5)
+    vm.prank(bob);
+    proxy.vote(id, 5);
+
+    (uint8 top, bool tied) = proxy.leader(id);
+    assertEq(top, 5);
+    assertFalse(tied);
+  }
+
   function test_VoteCountsOne() public {
     vm.prank(alice);
     uint256 id = proxy.create("Should we launch?", defaultOptions, 1 days);
